@@ -1,9 +1,11 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { icons } from '../constants'
+import { Video, ResizeMode } from 'expo-av'
 
 
-const VideoCard = ({video:{title, thumbnail, video, creator:{username, avatar}}}) => {
+
+const VideoCard = ({ video: { title, thumbnail, video, creator: { username, avatar } } }) => {
 
     const [play, setPlay] = useState(false)
     return (
@@ -15,7 +17,7 @@ const VideoCard = ({video:{title, thumbnail, video, creator:{username, avatar}}}
                     <View className='w-[45px] h-[45px] rounded-lg border-secondary border-2 justify-center items-center p-0.5'>
 
                         <Image
-                            source={{uri:avatar}} 
+                            source={{ uri: avatar }}
                             className='w-full h-full rounded-lg'
                             resizeMode='cover'
                         />
@@ -33,17 +35,30 @@ const VideoCard = ({video:{title, thumbnail, video, creator:{username, avatar}}}
                         resizeMode='contain'
                     />
                 </View>
-            </View>   
+            </View>
             {play ? (
-                <Text className='text-white text-lg justify-center flex items-center'>Playing...</Text>
+                <Video
+                    source={{ uri: video }}
+
+                    className='w-full h-60 rounded-xl mt-3 '
+                    resizeMode={ResizeMode.CONTAIN}
+                    useNativeControls
+                    shouldPlay
+                    onPlaybackStatusUpdate={(status) => {
+                        if (status.didJustFinish) {
+                            setPlay(false)
+                        }
+                    }}
+
+                />
             ) : (
                 <TouchableOpacity
                     className='w-full h-60 rounded-xl mt-3 relative justify-center items-center'
                     activeOpacity={0.7}
-                    onPress={()=> setPlay(true)}
+                    onPress={() => setPlay(true)}
                 >
                     <Image
-                        source={{uri:thumbnail}}
+                        source={{ uri: thumbnail }}
                         className='w-full h-full rounded-xl mt-3'
                         resizeMode='cover'
                     />
