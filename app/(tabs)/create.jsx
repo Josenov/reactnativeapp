@@ -8,6 +8,7 @@ import * as ImagePicker from 'expo-image-picker'
 import { router } from 'expo-router'
 import {createVideo} from '../../lib/appwrite'
 import {useGlobalContext} from '../../context/GlobalProvider'
+import { StatusBar } from 'expo-status-bar'
 
 const Create = () => {
 
@@ -161,6 +162,7 @@ const Create = () => {
 
 
       </ScrollView>
+      <StatusBar backgroundColor='#161622' style='light'/>
     </SafeAreaView>
   )
 

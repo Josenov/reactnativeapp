@@ -8,7 +8,8 @@ import EmptyState from '../../components/EmptyState'
 import { searchPosts } from '../../lib/appwrite'
 import useAppwrite from '../../lib/useAppwrite'
 import VideoCard from '../../components/VideoCard'
-import { useLocalSearchParams } from 'expo-router'
+import { router, useLocalSearchParams } from 'expo-router'
+import CustomButton from '../../components/CustomButton'
 
 
 
@@ -16,7 +17,7 @@ const Search = () => {
 
     const { query } = useLocalSearchParams();
 
-    const { data: posts, refetch } = useAppwrite(()=> searchPosts(query))
+    const { data: posts, refetch } = useAppwrite(() => searchPosts(query))
 
 
     useEffect(() => {
@@ -55,11 +56,19 @@ const Search = () => {
                     </View>
                 )}
                 ListEmptyComponent={() => (
-                    <EmptyState
-                        title='No videos found'
-                        subtitle='No videos found for this search query'
+                    <>
 
-                    />
+                        <EmptyState
+                            title='No videos found'
+                            subtitle='No videos found for this search query'
+                        />
+                        <CustomButton
+                            title='Create video'
+                            handlePress={() => router.push('/create')}
+                            containerStyles={'w-full my-5'}
+                        />
+
+                    </>
                 )}
 
 
